@@ -1,3 +1,5 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Item {
@@ -6,18 +8,18 @@ public class Item {
 	private String itmType;
 	private double itmPrice;
 	private int itmAmount;
-	private Date itmExpDate;
-	
+	private String itemExpDateStr;
+
 	public Item() {}
-	
-	public Item(String name, String type, double price, int amount, Date date) {
-		
+
+	public Item(String name, String type, double price, int amount, String date) {
+
 		this.itmName = name;
 		this.itmType = type;
 		this.itmPrice = price;
 		this.itmAmount = amount;
-		this.itmExpDate = date;
-				
+		this.itemExpDateStr = date;
+
 	}
 
 	public String getItmName() {
@@ -51,18 +53,19 @@ public class Item {
 	public void setItmAmount(int itmAmount) {
 		this.itmAmount = itmAmount;
 	}
-	
-	public Date getItmExpDate() {
-		return itmExpDate;
+
+	@SuppressWarnings("deprecation")
+	public String toString() {
+
+		return "Item name: "+this.itmName+"\nItem type: "+this.itmType+"\nItem price: "+this.itmPrice+"\nItem expiry date: "+this.itemExpDateStr;
+
 	}
 
-	public void setItmExpDate(Date itmExpDate) {
-		this.itmExpDate = itmExpDate;
+	public String getItemExpDateStr() {
+		return itemExpDateStr;
 	}
-	
-	public String toString() {
-		
-		return "Item name: "+this.itmName+"\nItem type: "+this.itmType+"\nItem price: "+this.itmPrice+"\nItem expiry date: "+this.itmExpDate;
-		
+
+	public void setItemExpDateStr(String itemExpDateStr) {
+		this.itemExpDateStr = itemExpDateStr;
 	}
 }
