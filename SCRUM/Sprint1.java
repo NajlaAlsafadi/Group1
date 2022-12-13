@@ -24,7 +24,7 @@ public class Sprint1 extends JFrame{
 	private ArrayList<User> userList = new ArrayList<User>();
 	private ArrayList<Item> itemList = new ArrayList<Item>();
 	private ArrayList<Item> basket = new ArrayList<Item>();
-	private ArrayList<JCheckBox> str = new ArrayList<JCheckBox>();
+	private ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	private ArrayList<String> strCB = new ArrayList<String>();
 	
 	
@@ -114,7 +114,7 @@ public class Sprint1 extends JFrame{
 																					
 											cb = new JCheckBox(i.getItmName());
 											panel.add(cb);
-											str.add(cb);
+											checkBoxes.add(cb);
 											
 											
 											textArea.append("\n "+i.toString());
@@ -130,14 +130,39 @@ public class Sprint1 extends JFrame{
 						
 						if(pickItm == JOptionPane.YES_OPTION) {
 							
+							for(Item i: basket) {
+								
+								String s = i.getItmType();
+								
+								if(s.equalsIgnoreCase("Luxury")) {
+									
+									i.setItmPrice(i.getItmPrice()*1.2);
+								}
+								else if(s.equalsIgnoreCase("Essential")) {
+								
+									i.setItmPrice(i.getItmPrice()*1.1);
+								}
+								else if(s.equalsIgnoreCase("Gift")) {
+									
+									i.setItmPrice(i.getItmPrice()*1.05);
+								}
+								
+							}
+							
+							textArea.setText(basket.toString());
+						}
+						else if(pickItm == JOptionPane.NO_OPTION) {
+							
+							//Add to Basket option
 							User u = (User) loggedInMap.get("loggedInUser");
 							Item item = null;
+							String c;
 							
-							for(JCheckBox cb: str) {
+							for(JCheckBox cb: checkBoxes) {
 								
 								if(cb.isSelected()) {
 									
-									String c = cb.getText();
+									c = cb.getText();
 									for(Item i: itemList) {
 										
 										if(i.getItmName().equals(c)) {
@@ -145,18 +170,14 @@ public class Sprint1 extends JFrame{
 											item = i;
 											
 										}
-										u.getBasket().add(item);
+										basket.add(item);
 									}
-									u.getBasket().toString();
+									
 								}
 							}
 							
-							
-							System.out.println(strCB.toString());
-						}
-						else if(pickItm == JOptionPane.NO_OPTION) {
-							
-							//Add to Basket option
+							System.out.println(basket.toString());
+							textArea.append(basket.toString());
 						}
 					}
 				}
