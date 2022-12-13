@@ -23,14 +23,17 @@ public class Sprint1 extends JFrame{
 	//Users and items lists
 	private ArrayList<User> userList = new ArrayList<User>();
 	private ArrayList<Item> itemList = new ArrayList<Item>();
+	private ArrayList<Item> basket = new ArrayList<Item>();
+	private ArrayList<String> str = new ArrayList<String>();
 
 	private JTextArea textArea = new JTextArea(500,50);
+	private JCheckBox cb;
 
 	public Sprint1() {
 
 		super("Retail Outlet");
 
-		User user = new User("user", "p", "Staff");		
+		User user = new User("user", "p", "Staff", null);		
 		userList.add(user);
 
 		setLayout(new BorderLayout());
@@ -46,6 +49,7 @@ public class Sprint1 extends JFrame{
 		JMenuItem registerItem = new JMenuItem("Register");
 		JMenuItem loginItem = new JMenuItem("Login");
 		JMenuItem viewInDate = new JMenuItem("View Items");
+		JMenuItem viewBasket = new JMenuItem("View Basket");
 
 		shopMI.add(viewInDate);
 		//Action Listeners
@@ -73,6 +77,8 @@ public class Sprint1 extends JFrame{
 					JComboBox<String> viewBox = new JComboBox<String>(itmsArr);
 					JLabel validDel = new JLabel("Item has been deleted from the system.");
 					Object[] btnOptions = {"View", "Cancel"};
+					
+					
 
 					int vewItm = JOptionPane.showOptionDialog(null, new Object[] {viewLbl, viewBox},
 							"View Item", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, btnOptions, btnOptions[1]);
@@ -80,27 +86,68 @@ public class Sprint1 extends JFrame{
 					if(vewItm == JOptionPane.OK_OPTION) {
 						//Code to print items in date, NOTE: prints all items regardless of category!
 						textArea.setText("");
+						JPanel panel = new JPanel();
+						String type = null;
+						
 						for(Item i: itemList) {
-						Item ite = itemList.get(x);
-						String viewCat = (String)viewBox.getSelectedItem();
-						if(ite.getItmType().equals(viewCat)) {
-									String date1 = ite.getItemExpDateStr();
-									Date date = null;
-									try {
-										date = new SimpleDateFormat("dd/MM/yyyy").parse(date1);
-									} catch (ParseException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
-									Date currentDate = new Date();
-									if(date.after(currentDate))
-										textArea.append(itemList.get(x).toString());
+							
+							String viewCat = (String)viewBox.getSelectedItem();
+							
+							if(i.getItmType().equals(viewCat)) {
+								
+										String date1 = i.getItemExpDateStr();
+										type = i.getItmType();
+										
+										Date date = null;
+										try {
+											date = new SimpleDateFormat("dd/MM/yyyy").parse(date1);
+										} catch (ParseException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+										Date currentDate = new Date();
+										
+										if(date.after(currentDate)) {
+																					
+											cb = new JCheckBox(i.getItmName());
+											panel.add(cb);
+											
+											textArea.append("\n "+i.toString());
+										}										
+							}	
 						}
-						x++;
+						
+						JLabel itmLbl = new JLabel("Tick the "+type+" items below:"); 
+						Object[] itmBtnOptions = {"Calculate","Add to Basket","Cancel"};
+						
+						int pickItm = JOptionPane.showOptionDialog(null, new Object[] {itmLbl, panel},
+								type+" Item", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, itmBtnOptions, itmBtnOptions[2]);
+						
+						if(pickItm == JOptionPane.YES_OPTION) {
+							
+							
+							getSelected();
+							
+							System.out.println(str.toString());
+						}
+						else if(pickItm == JOptionPane.NO_OPTION) {
+							
+							//Add to Basket option
 						}
 					}
 				}
 			}					
+		});
+		
+		shopMI.add(viewBasket);
+		
+		viewBasket.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				
+			}			
 		});
 
 		registerItem.addActionListener(new ActionListener() {
@@ -164,7 +211,7 @@ public class Sprint1 extends JFrame{
 						}
 						else {
 							//Create user and add it to user list
-							User user = new User(usrTfld.getText(), pswdFld1.getText(), userType);
+							User user = new User(usrTfld.getText(), pswdFld1.getText(), userType, null);
 							userList.add(user);
 
 							//User added message
@@ -458,7 +505,20 @@ public class Sprint1 extends JFrame{
 		setVisible(true);
 
 	}
-
+	
+	public void getSelected() {
+					
+		for (Component c : getComponents()) {
+			
+			 if (c instanceof JCheckBox)
+		            if (((JCheckBox) c).isSelected()) {
+		            	
+		            	str.add(((JCheckBox) c).getText());
+		            }
+		}
+	}
+	
+	
 	//Function checking if amount is an integer and positive
 	public static boolean checkAmt(String s) {
 

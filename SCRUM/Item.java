@@ -57,7 +57,7 @@ public class Item {
 	@SuppressWarnings("deprecation")
 	public String toString() {
 
-		return "Item name: "+this.itmName+"\nItem type: "+this.itmType+"\nItem price: "+this.itmPrice+"\nItem expiry date: "+this.itemExpDateStr + "\n";
+		return "Item: "+this.itmName+", Type: "+this.itmType+", Price: €"+this.itmPrice+", Expiry date: "+this.itemExpDateStr;
 
 	}
 

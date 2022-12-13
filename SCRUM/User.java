@@ -1,17 +1,20 @@
+import java.util.ArrayList;
 
 public class User {
 
 	private String username;
 	private String password;
 	private String userType;
+	private ArrayList basket;
 	
 	public User() {}
 	
-	public User(String u, String p, String ut) {
+	public User(String u, String p, String ut, ArrayList b) {
 		
 		this.username = u;
 		this.password = p;
 		this.userType = ut;
+		this.basket = b;
 		
 	}
 
@@ -39,9 +42,17 @@ public class User {
 		this.userType = userType;
 	}
 	
+	public ArrayList getBasket() {
+		return basket;
+	}
+
+	public void setBasket(ArrayList basket) {
+		this.basket = basket;
+	}
+
 	public String toString() {
 		
-		return "User type: "+this.userType+"\nUsername: "+this.username;
+		return "User: "+this.username+", User Type: "+this.userType;
 		
 	}
 }
