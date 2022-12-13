@@ -24,8 +24,10 @@ public class Sprint1 extends JFrame{
 	private ArrayList<User> userList = new ArrayList<User>();
 	private ArrayList<Item> itemList = new ArrayList<Item>();
 	private ArrayList<Item> basket = new ArrayList<Item>();
-	private ArrayList<String> str = new ArrayList<String>();
-
+	private ArrayList<JCheckBox> str = new ArrayList<JCheckBox>();
+	private ArrayList<String> strCB = new ArrayList<String>();
+	
+	
 	private JTextArea textArea = new JTextArea(500,50);
 	private JCheckBox cb;
 
@@ -33,7 +35,7 @@ public class Sprint1 extends JFrame{
 
 		super("Retail Outlet");
 
-		User user = new User("user", "p", "Staff", null);		
+		User user = new User("user", "p", "Staff", basket);		
 		userList.add(user);
 
 		setLayout(new BorderLayout());
@@ -88,6 +90,7 @@ public class Sprint1 extends JFrame{
 						textArea.setText("");
 						JPanel panel = new JPanel();
 						String type = null;
+						int xx = 0;
 						
 						for(Item i: itemList) {
 							
@@ -111,6 +114,8 @@ public class Sprint1 extends JFrame{
 																					
 											cb = new JCheckBox(i.getItmName());
 											panel.add(cb);
+											str.add(cb);
+											
 											
 											textArea.append("\n "+i.toString());
 										}										
@@ -125,10 +130,29 @@ public class Sprint1 extends JFrame{
 						
 						if(pickItm == JOptionPane.YES_OPTION) {
 							
+							User u = (User) loggedInMap.get("loggedInUser");
+							Item item = null;
 							
-							getSelected();
+							for(JCheckBox cb: str) {
+								
+								if(cb.isSelected()) {
+									
+									String c = cb.getText();
+									for(Item i: itemList) {
+										
+										if(i.getItmName().equals(c)) {
+											
+											item = i;
+											
+										}
+										u.getBasket().add(item);
+									}
+									u.getBasket().toString();
+								}
+							}
 							
-							System.out.println(str.toString());
+							
+							System.out.println(strCB.toString());
 						}
 						else if(pickItm == JOptionPane.NO_OPTION) {
 							
@@ -513,7 +537,7 @@ public class Sprint1 extends JFrame{
 			 if (c instanceof JCheckBox)
 		            if (((JCheckBox) c).isSelected()) {
 		            	
-		            	str.add(((JCheckBox) c).getText());
+		            	
 		            }
 		}
 	}

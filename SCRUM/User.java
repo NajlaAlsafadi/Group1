@@ -5,7 +5,7 @@ public class User {
 	private String username;
 	private String password;
 	private String userType;
-	private ArrayList basket;
+	private ArrayList<Item> basket;
 	
 	public User() {}
 	
@@ -46,7 +46,7 @@ public class User {
 		return basket;
 	}
 
-	public void setBasket(ArrayList basket) {
+	public void setBasket(ArrayList<Item> basket) {
 		this.basket = basket;
 	}
 
