@@ -44,9 +44,11 @@ public class Sprint1 extends JFrame{
 		textArea.setEditable(false);
 		add(textArea,BorderLayout.NORTH);
 
-		JMenu itemMI = new JMenu("Items");
+		JMenu itemMI = new JMenu("Stock");
 		JMenu exitMI = new JMenu("Exit");
 		JMenu shopMI = new JMenu("Shopping");
+		JMenu changeMI = new JMenu("Change Calculator");
+		JMenu packMI = new JMenu("Item Packing");
 
 		JMenuItem viewInDate = new JMenuItem("View Items");
 		JMenuItem viewBasket = new JMenuItem("View Basket");
@@ -174,7 +176,7 @@ public class Sprint1 extends JFrame{
 								for(Item itm: basket) {
 									if(itm.equals(i)) {
 										int q = Integer.parseInt(quantity.getText());
-										i.setItmAmount((i.getItmAmount()-q));
+										i.setItmAmount((int)(i.getItmAmount()-q));
 									}
 
 								}
@@ -242,7 +244,7 @@ public class Sprint1 extends JFrame{
 				for(Item i: itemList) {
 					for(Item itm: basket) {
 						if(itm.equals(i)) {
-							i.setItmAmount((i.getItmAmount()-q));
+							i.setItmAmount((int)(i.getItmAmount()-q));
 						}
 
 					}
@@ -433,11 +435,14 @@ public class Sprint1 extends JFrame{
 
 		// create a menu bar and use it in this JFrame
 		JMenuBar menuBar = new JMenuBar();
+		
 		menuBar.add(shopMI);
 		menuBar.add(itemMI);
 		menuBar.add(exitMI);
 		setJMenuBar(menuBar);
-
+		menuBar.add(changeMI);
+		menuBar.add(packMI);
+		
 		// Final JFrame methods to set close operation + set size and visibility
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500,550);
